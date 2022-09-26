@@ -101,5 +101,4 @@ This can also help detect false-positives. If the jump leads into ntdll.dll itse
 
 Below is a snippet of the output of the program compiled from the above source code and run on a system with an EDR present. It shows some of the interesting functions (not all displayed) that are most likely hooked, with an exception of NtGetTickCount, which is a false positive, as mentioned earlier:
 
-![Usual suspects hooked + some false positives](/images/demo.png)
-<img src="./images/demo.png" align="center">
+<p align="center"><img src="./images/demo.png" alt="Usual suspects hooked + some false positives"></p>
