@@ -25,7 +25,7 @@ We can see the NtReadVirtualMemory syscall stub starts with instructions:
     4c 8b d1 b8
 ```
 
-<p align="center"><img src="./images/4opocodes.png" alt="opocodes"></p>
+<img src="./images/4opocodes.png" alt="opocodes">
 
 ## Function after Hooking
 
