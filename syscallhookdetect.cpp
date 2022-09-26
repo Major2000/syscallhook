@@ -39,4 +39,33 @@ int main()
 
 		// Syscall stubs start with these bytes
 		unsigned char syscallPrologue[4] = { 0x4c, 0x8b, 0xd1, 0xb8 };
+
+
+        // Only interested in Nt|Zw functions
+		if (strncmp(functionName, (char*)"Nt", 2) == 0 || strncmp(functionName, (char*)"Zw", 2) == 0)
+		{
+			// Check if the first 4 instructions of the exported function are the same as the sycall's prologue
+			if (memcmp(functionAddress, syscallPrologue, 4) != 0) {
+			
+				if (*((unsigned char*)functionAddress) == 0xE9) // first byte is a jmp instruction, where does it jump to?
+				{
+					DWORD jumpTargetRelative = *((PDWORD)((char*)functionAddress + 1));
+					PDWORD jumpTarget = functionAddress + 5 /*Instruction pointer after our jmp instruction*/ + jumpTargetRelative;  
+					char moduleNameBuffer[512];
+					GetMappedFileNameA(GetCurrentProcess(), jumpTarget, moduleNameBuffer, 512);
+					
+					printf("Hooked: %s : %p into module %s\n", functionName, functionAddress, moduleNameBuffer);
+				}
+				else
+				{
+					printf("Potentially hooked: %s : %p\n", functionName, functionAddress);
+				}
+			
+			
+				
+			}
+		}
+	}
+
+	return 0;
 }
