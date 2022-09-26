@@ -22,4 +22,21 @@ int main()
 	PDWORD addresOfFunctionsRVA = (PDWORD)((DWORD_PTR)libraryBase + imageExportDirectory->AddressOfFunctions);
 	PDWORD addressOfNamesRVA = (PDWORD)((DWORD_PTR)libraryBase + imageExportDirectory->AddressOfNames);
 	PWORD addressOfNameOrdinalsRVA = (PWORD)((DWORD_PTR)libraryBase + imageExportDirectory->AddressOfNameOrdinals);
+
+
+    // Iterate through exported functions of ntdll
+	for (DWORD i = 0; i < imageExportDirectory->NumberOfNames; i++)
+	{
+		// Resolve exported function name
+		DWORD functionNameRVA = addressOfNamesRVA[i];
+		DWORD_PTR functionNameVA = (DWORD_PTR)libraryBase + functionNameRVA;
+		char* functionName = (char*)functionNameVA;
+		
+		// Resolve exported function address
+		DWORD_PTR functionAddressRVA = 0;
+		functionAddressRVA = addresOfFunctionsRVA[addressOfNameOrdinalsRVA[i]];
+		functionAddress = (PDWORD)((DWORD_PTR)libraryBase + functionAddressRVA);
+
+		// Syscall stubs start with these bytes
+		unsigned char syscallPrologue[4] = { 0x4c, 0x8b, 0xd1, 0xb8 };
 }
