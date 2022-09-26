@@ -7,7 +7,7 @@ Enumerate which window API calls are hooked by an EDR using inline patching tech
 ## Function before Hooking
 
 Below shows the stub for for NtReadVirtualMemory on a system with no EDR present, meaning the syscall NtReadVirtualMemory is not hooked:
-![Before hooking](/images/beforehook.png)
+<p align="center"><img src="./images/beforehook.png" alt="Before hooking"></p>
 
 We can see the NtReadVirtualMemory syscall stub starts with instructions:
 
@@ -25,12 +25,12 @@ We can see the NtReadVirtualMemory syscall stub starts with instructions:
     4c 8b d1 b8
 ```
 
-![opocodes](/images/4opocodes.png)
+<p align="center"><img src="./images/4opocodes.png" alt="opocodes"></p>
 
 ## Function after Hooking
 
 Below shows an example of how NtReadVirtualMemory syscall stub looks like when it's hooked by an EDR:
-![After hooking](/images/afterhook.png)
+<p align="center"><img src="./images/afterhook.png" alt="After hooking"></p>
 
 Note that in this case, the first instruction is a jmp instruction, redirecting the code execution somewhere else (another module in the process's memory):
 
@@ -64,7 +64,7 @@ Below is a simplified visual example attempting to further explain the above pro
 
 2. NtWriteVirtualMemory starts with opcodes 4c 8b d1 b8, meaning it has not been hooked
 
-![Hooked and unhooked functions](/images/checkhook.png)
+<p align="center"><img src="./images/checkhook.png" alt="Hooked and unhooked functions"></p>
 
 ## Detecting who placed the Hook
 
