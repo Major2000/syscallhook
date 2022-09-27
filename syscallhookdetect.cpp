@@ -1,6 +1,7 @@
 #include <iostream>
 #include <windows.h>
 #include <psapi.h>
+#define _start main
 
 
 
@@ -52,7 +53,12 @@ int main()
 					DWORD jumpTargetRelative = *((PDWORD)((char*)functionAddress + 1));
 					PDWORD jumpTarget = functionAddress + 5 /*Instruction pointer after our jmp instruction*/ + jumpTargetRelative;  
 					char moduleNameBuffer[512];
-					GetMappedFileNameA(GetCurrentProcess(), jumpTarget, moduleNameBuffer, 512);
+					// GetMappedFileNameA(
+					// 	GetCurrentProcess(), 
+					// 	jumpTarget, 
+					// 	moduleNameBuffer, 
+					// 	512
+					// );
 					printf("Hooked: %s : %p into module %s\n", functionName, functionAddress, moduleNameBuffer);
 				}
 				else
@@ -60,6 +66,7 @@ int main()
 					printf("Potentially hooked: %s : %p\n", functionName, functionAddress);
 				}
 			
+
 				
 			}
 		}
