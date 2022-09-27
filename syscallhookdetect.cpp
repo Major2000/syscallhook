@@ -53,14 +53,12 @@ int main()
 					PDWORD jumpTarget = functionAddress + 5 /*Instruction pointer after our jmp instruction*/ + jumpTargetRelative;  
 					char moduleNameBuffer[512];
 					GetMappedFileNameA(GetCurrentProcess(), jumpTarget, moduleNameBuffer, 512);
-					
 					printf("Hooked: %s : %p into module %s\n", functionName, functionAddress, moduleNameBuffer);
 				}
 				else
 				{
 					printf("Potentially hooked: %s : %p\n", functionName, functionAddress);
 				}
-			
 			
 				
 			}
